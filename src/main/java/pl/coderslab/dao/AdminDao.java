@@ -13,6 +13,7 @@ public class AdminDao {
     private static final String DELETE_ADMIN_QUERY = "DELETE FROM admins where id = ?;";
     private static final String FIND_ALL_ADMIN_QUERY = "SELECT * FROM admins;";
     private static final String READ_ADMIN_QUERY = "SELECT * from admins where id = ?;";
+    private static final String READ_ADMIN_QUERY_BY_EMAIL = "SELECT * from admins where email = ?;";
     private static final String UPDATE_ADMIN_QUERY = "UPDATE admins SET first_name = ? , last_name = ?, email = ?, password = ? WHERE id = ?;";
 
     public Admin readAdmin(int id){
@@ -32,6 +33,33 @@ public class AdminDao {
             e.printStackTrace();
         }
         return admin;
+    }
+
+    public Admin readAdminByEmail(String email){
+        Admin admin = new Admin();
+        try(Connection connection = DbUtil.getConnection()){
+            PreparedStatement statement = connection.prepareStatement(READ_ADMIN_QUERY_BY_EMAIL);
+            statement.setString(1, email);
+            ResultSet rs = statement.executeQuery();
+            if(rs.next()){
+                admin.setId(rs.getInt("id"));
+                admin.setFirstName(rs.getString("first_name"));
+                admin.setLastName(rs.getString("last_name"));
+                admin.setEmail(rs.getString("email"));
+                admin.setPassword(rs.getString("password"));
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return admin;
+    }
+
+    public boolean checkAdminPassword(String email, String password){
+        Admin admin = readAdminByEmail(email);
+        if(BCrypt.checkpw(password, admin.getPassword())){
+            return true;
+        }
+        return false;
     }
 
     public List<Admin> readAllAdmins(){
