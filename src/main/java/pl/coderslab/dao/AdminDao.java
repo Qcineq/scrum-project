@@ -56,10 +56,10 @@ public class AdminDao {
 
     public boolean checkAdminPassword(String email, String password){
         Admin admin = readAdminByEmail(email);
-        if(BCrypt.checkpw(password, admin.getPassword())){
-            return true;
+        if(admin.getEmail()==null || admin.getEmail().equals("")){
+            return false;
         }
-        return false;
+        return BCrypt.checkpw(password, admin.getPassword());
     }
 
     public List<Admin> readAllAdmins(){
