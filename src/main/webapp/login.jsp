@@ -60,6 +60,9 @@
             <input type="text" class="form-control" id="password" name="password" placeholder="podaj hasło">
           </div>
           <button class="btn btn-color rounded-0" type="submit">Zaloguj</button>
+          <c:if test="${not empty wrongpass}">
+            <b><br>Podano nieprawidłowe dane. Proszę spróbować ponownie.<br></b>
+          </c:if>
         </form>
       </div>
     </div>
