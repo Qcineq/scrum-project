@@ -12,13 +12,13 @@
                 <a class="nav-link color-header" href="register.jsp">rejestracja</a>
             </li>
             <li class="nav-item ml-4">
-                <a class="nav-link" href="#about">o aplikacji</a>
+                <a class="nav-link" href="aboutApp.jsp">o aplikacji</a>
             </li>
             <li class="nav-item ml-4">
                 <a class="nav-link disabled" href="recipes.html">Przepisy</a>
             </li>
             <li class="nav-item ml-4">
-                <a class="nav-link disabled" href="#contact">Kontakt</a>
+                <a class="nav-link disabled" href="contact.jsp">Kontakt</a>
             </li>
         </ul>
     </nav>
