@@ -9,6 +9,9 @@ import java.io.IOException;
 public class Dashboard extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        int plansQuantity = QuantityPlan.getPlansQuantityForLoggedUser(session);
+        session.setAttribute("plansQuantity", plansQuantity);
         request.getServletContext().getRequestDispatcher("/dashboard.jsp").forward(request, response);
     }
 
