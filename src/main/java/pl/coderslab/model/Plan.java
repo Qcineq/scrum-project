@@ -5,10 +5,25 @@ public class Plan {
     private String name;
     private String description;
     private String created;
+    private int admin_id;
 
     @Override
     public String toString() {
-        return "Plan [id=" + id + ", name=" + name + ", description=" + description + ", created=" + created + "]";
+        return "Plan{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", created='" + created + '\'' +
+                ", admin_id=" + admin_id +
+                '}';
+    }
+
+    public int getAdmin_id() {
+        return admin_id;
+    }
+
+    public void setAdmin_id(int admin_id) {
+        this.admin_id = admin_id;
     }
 
     public Plan() {
