@@ -9,6 +9,15 @@ public class Recipe {
     private String updated;
     private int preparationTime;
     private String preparation;
+    private int admin_id;
+
+    public int getAdmin_id() {
+        return admin_id;
+    }
+
+    public void setAdmin_id(int admin_id) {
+        this.admin_id = admin_id;
+    }
 
     @Override
     public String toString() {
@@ -21,6 +30,7 @@ public class Recipe {
                 ", updated='" + updated + '\'' +
                 ", preparationTime=" + preparationTime +
                 ", preparation='" + preparation + '\'' +
+                ", admin_id=" + admin_id +
                 '}';
     }
 
