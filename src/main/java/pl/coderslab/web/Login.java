@@ -1,6 +1,7 @@
 package pl.coderslab.web;
 
 import pl.coderslab.dao.AdminDao;
+import pl.coderslab.model.Admin;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -18,10 +19,15 @@ public class Login extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     String email = request.getParameter("email");
     String password = request.getParameter("password");
+    HttpSession session = request.getSession();
     if(email!=null && password!=null){
         AdminDao adminDao = new AdminDao();
         if(adminDao.checkAdminPassword(email, password)){
-            response.sendRedirect("http://localhost:8080/");
+            session.setAttribute("email", email);
+            session.setAttribute("password", password);
+            Admin admin = adminDao.readAdminByEmail(email);
+            session.setAttribute("name", admin.getFirstName());
+            response.sendRedirect("http://localhost:8080/app/dashboard");
         } else {
             String wrongPassOrEmail = "Podano nieprawidłowe dane logowania. Spróbuj ponownie";
             request.setAttribute("wrongpass", wrongPassOrEmail);
