@@ -16,13 +16,16 @@ public class FilterLog implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
-        HttpServletRequest req= (HttpServletRequest) request;
+        if (request instanceof HttpServletRequest) {
+            HttpServletRequest req = (HttpServletRequest) request;
 
-        if (req.getSession().getAttribute("email") == null || req.getSession().getAttribute("password")==null) {
-            HttpServletResponse res = (HttpServletResponse) response;
-            res.sendRedirect("/login");
-            return;
+
+            if (req.getSession().getAttribute("email") == null ) {
+                HttpServletResponse res = (HttpServletResponse) response;
+                res.sendRedirect("/login");
+                return;
+            }
+            chain.doFilter(request, response);
         }
-        chain.doFilter(request, response);
     }
 }
