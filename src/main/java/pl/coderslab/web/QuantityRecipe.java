@@ -10,7 +10,7 @@ import java.sql.*;
 public class QuantityRecipe {
 
     private static String SQL = "select count(id) from recipe where admin_id = ?;";
-    public static int getPlansQuantityForLoggedUser(HttpSession session) {
+    public static int getRecipeQuantityForLoggedUser(HttpSession session) {
         Integer recipeQuantity = null;
         String email = (String) session.getAttribute("email");
         AdminDao adminDao = new AdminDao();

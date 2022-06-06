@@ -11,7 +11,9 @@ public class Dashboard extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         int plansQuantity = QuantityPlan.getPlansQuantityForLoggedUser(session);
+        int recipeQuantity = QuantityRecipe.getRecipeQuantityForLoggedUser(session);
         session.setAttribute("plansQuantity", plansQuantity);
+        session.setAttribute("recipeQuantity", recipeQuantity);
         request.getServletContext().getRequestDispatcher("/dashboard.jsp").forward(request, response);
     }
 
