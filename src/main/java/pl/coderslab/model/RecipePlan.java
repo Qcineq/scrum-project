@@ -5,6 +5,8 @@ public class RecipePlan {
     private String mealName;
     private String recipeName;
     private String recipeDescription;
+    private int recipeId;
+    private int planId;
 
     @Override
     public String toString() {
@@ -13,7 +15,25 @@ public class RecipePlan {
                 ", mealName='" + mealName + '\'' +
                 ", recipeName='" + recipeName + '\'' +
                 ", recipeDescription='" + recipeDescription + '\'' +
+                ", recipeId=" + recipeId +
+                ", planId=" + planId +
                 '}';
+    }
+
+    public int getPlanId() {
+        return planId;
+    }
+
+    public void setPlanId(int planId) {
+        this.planId = planId;
+    }
+
+    public int getRecipeId() {
+        return recipeId;
+    }
+
+    public void setRecipeId(int recipeId) {
+        this.recipeId = recipeId;
     }
 
     public String getDayName() {

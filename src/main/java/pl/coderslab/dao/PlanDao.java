@@ -183,13 +183,16 @@ public class PlanDao {
         Plan plan = new Plan();
         try(Connection connection = DbUtil.getConnection()){
             PreparedStatement statement = connection.prepareStatement(REAL_LAST_ADDED_PLAN_FOR_ADMIN_ID);
+            statement.setInt(1, admin_id);
             ResultSet rs = statement.executeQuery();
-            plan.setId(rs.getInt("id"));
-            plan.setName(rs.getString("name"));
-            plan.setDescription(rs.getString("description"));
-            plan.setAdmin_id(rs.getInt("admin_id"));
-            plan.setCreated(rs.getString("created"));
-        } catch (SQLException e ){
+            if(rs.next()) {
+                plan.setId(rs.getInt("id"));
+                plan.setName(rs.getString("name"));
+                plan.setDescription(rs.getString("description"));
+                plan.setAdmin_id(rs.getInt("admin_id"));
+                plan.setCreated(rs.getString("created"));
+            }
+            } catch (SQLException e ){
             e.printStackTrace();
         }
         return plan;

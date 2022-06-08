@@ -12,6 +12,7 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @WebServlet(name = "Dashboard", value = "/app/dashboard")
 public class Dashboard extends HttpServlet {
@@ -19,16 +20,18 @@ public class Dashboard extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         AdminDao adminDao = new AdminDao();
-        Admin loggedAdmin = adminDao.readAdminByEmail((String) session.getAttribute("email"));
-        List<RecipePlan> recipePlanList = RecipePlanDao.getLastPlanDetails(loggedAdmin.getId());
+        String email = (String)session.getAttribute("email");
+        Admin loggedAdmin = adminDao.readAdminByEmail(email);
+        Map<String, List<RecipePlan>> recipePlanForEveryDay = RecipePlanDao.getLastPlanDetails(loggedAdmin.getId());
         PlanDao planDao = new PlanDao();
         Plan lastPlan = planDao.getLastPlanForAdminId(loggedAdmin.getId());
+        System.out.println(lastPlan);
         int plansQuantity = QuantityPlan.getPlansQuantityForLoggedUser(session);
         int recipeQuantity = QuantityRecipe.getRecipeQuantityForLoggedUser(session);
         session.setAttribute("plansQuantity", plansQuantity);
         session.setAttribute("recipeQuantity", recipeQuantity);
         session.setAttribute("lastPlan", lastPlan);
-        session.setAttribute("recipePlanDetailsList", recipePlanList);
+        session.setAttribute("recipePlanForEveryDay", recipePlanForEveryDay);
         request.getServletContext().getRequestDispatcher("/dashboard.jsp").forward(request, response);
     }
 

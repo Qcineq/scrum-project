@@ -64,58 +64,55 @@
                 <h2 class="dashboard-content-title">
                     <span>Ostatnio dodany plan:</span> ${sessionScope.lastPlan.getName()}
                 </h2>
+                <c:forEach items="${sessionScope.recipePlanForEveryDay.keySet()}" var="dayName">
+                    <c:if test="${dayName=='poniedziałek'}">
                 <table class="table">
                     <thead>
                     <tr class="d-flex">
-                        <th class="col-2">Poniedziałek</th>
+                        <th class="col-2">${dayName}</th>
                         <th class="col-8"></th>
                         <th class="col-2"></th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr class="d-flex">
-                        <td class="col-2">śniadanie</td>
-                        <td class="col-8">płatki owsiane z jagodami i komosą ryżową</td>
-                        <td class="col-2"><button type="button" class="btn btn-primary rounded-0">Szczegóły</button></td>
-                    </tr>
-                    <tr class="d-flex">
-                        <td class="col-2">śniadanie</td>
-                        <td class="col-8">kanapka z pastą rybną</td>
-                        <td class="col-2"><button type="button" class="btn btn-primary rounded-0">Szczegóły</button></td>
-                    </tr>
-                    <tr class="d-flex">
-                        <td class="col-2">obiad</td>
-                        <td class="col-8">zupa pomidorowa</td>
-                        <td class="col-2"><button type="button" class="btn btn-primary rounded-0">Szczegóły</button></td>
-                    </tr>
-                    </tbody>
+                    <c:forEach items="${sessionScope.recipePlanForEveryDay.get(dayName)}" var="recipesForLastPlan">
+                        <tbody>
+                        <tr class="d-flex">
+                            <td class="col-2">${recipesForLastPlan.getMealName()}</td>
+                            <td class="col-8">${recipesForLastPlan.getRecipeName()}</td>
+                            <td class="col-2"><button type="button" class="btn btn-primary rounded-0">Szczegóły</button></td>
+                        </tr>
+
+                    </c:forEach>
+                        </tbody>
                 </table>
-                <table class="table">
-                    <thead>
-                    <tr class="d-flex">
-                        <th class="col-2">Wtorek</th>
-                        <th class="col-8"></th>
-                        <th class="col-2"></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr class="d-flex">
-                        <td class="col-2">śniadanie</td>
-                        <td class="col-8">płatki owsiane z jagodami i komosą ryżową</td>
-                        <td class="col-2"><button type="button" class="btn btn-primary rounded-0">Szczegóły</button></td>
-                    </tr>
-                    <tr class="d-flex">
-                        <td class="col-2">drugie śniadanie</td>
-                        <td class="col-8">pączki</td>
-                        <td class="col-2"><button type="button" class="btn btn-primary rounded-0">Szczegóły</button></td>
-                    </tr>
-                    <tr class="d-flex">
-                        <td class="col-2">obiad</td>
-                        <td class="col-8">schabowy w panierce</td>
-                        <td class="col-2"><button type="button" class="btn btn-primary rounded-0">Szczegóły</button></td>
-                    </tr>
-                    </tbody>
-                </table>
+                    </c:if>
+
+                    <c:if test="${dayName=='wtorek'}">
+                        <table class="table">
+                        <thead>
+                        <tr class="d-flex">
+                            <th class="col-2">${dayName}</th>
+                            <th class="col-8"></th>
+                            <th class="col-2"></th>
+                        </tr>
+                        </thead>
+                        <c:forEach items="${sessionScope.recipePlanForEveryDay.get(dayName)}" var="recipesForLastPlan">
+                            <tbody>
+                            <tr class="d-flex">
+                                <td class="col-2">${recipesForLastPlan.getMealName()}</td>
+                                <td class="col-8">${recipesForLastPlan.getRecipeName()}</td>
+                                <td class="col-2"><button type="button" class="btn btn-primary rounded-0">Szczegóły</button></td>
+                            </tr>
+                        </c:forEach>
+                            </tbody>
+                        </table>
+                    </c:if>
+
+
+                </c:forEach>
+
+
+
             </div>
         </div>
     </div>
