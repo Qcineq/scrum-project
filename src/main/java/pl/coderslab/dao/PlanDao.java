@@ -19,6 +19,7 @@ public class PlanDao {
     private static final String READ_PLAN_QUERY = "SELECT * from plan where id = ?;";
     private static final String UPDATE_PLAN_QUERY = "UPDATE	plan SET name = ? , description = ?, created = ?, admin_id = ? WHERE	id = ?;";
     private static final String READ_ALL_PLANS_FOR_ADMIN_ID = "SELECT * FROM plan WHERE admin_id = ?";
+    private static final String REAL_LAST_ADDED_PLAN_FOR_ADMIN_ID = "SELECT * FROM plan WHERE admin_id = ? ORDER BY id DESC LIMIT 1;";
 
 
     /**
@@ -176,5 +177,21 @@ public class PlanDao {
             e.printStackTrace();
         }
 
+    }
+
+    public Plan getLastPlanForAdminId(int admin_id){
+        Plan plan = new Plan();
+        try(Connection connection = DbUtil.getConnection()){
+            PreparedStatement statement = connection.prepareStatement(REAL_LAST_ADDED_PLAN_FOR_ADMIN_ID);
+            ResultSet rs = statement.executeQuery();
+            plan.setId(rs.getInt("id"));
+            plan.setName(rs.getString("name"));
+            plan.setDescription(rs.getString("description"));
+            plan.setAdmin_id(rs.getInt("admin_id"));
+            plan.setCreated(rs.getString("created"));
+        } catch (SQLException e ){
+            e.printStackTrace();
+        }
+        return plan;
     }
 }
