@@ -23,11 +23,16 @@ public class RecipePlanDao {
     public static Map<String, List<RecipePlan>> getLastPlanDetails(int admin_id){
         Map<String, List<RecipePlan>> recipePlanForEveryDay = new LinkedHashMap<>();
         List<RecipePlan> recipePlanList = new ArrayList<>();
+        String actualDay = "";
         try(Connection connection = DbUtil.getConnection()){
             PreparedStatement statement = connection.prepareStatement(READ_LAST_PLAN_FOR_ADMIN_ID);
             statement.setInt(1, admin_id);
             ResultSet rs = statement.executeQuery();
             while (rs.next()){
+                if(!rs.getString("day_name").equals(actualDay)){
+                    recipePlanList = new ArrayList<RecipePlan>();
+                }
+                actualDay = rs.getString("day_name");
                 RecipePlan recipePlan = new RecipePlan();
                 recipePlan.setDayName(rs.getString("day_name"));
                 recipePlan.setMealName(rs.getString("meal_name"));
