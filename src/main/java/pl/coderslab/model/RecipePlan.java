@@ -7,6 +7,15 @@ public class RecipePlan {
     private String recipeDescription;
     private int recipeId;
     private int planId;
+    private int displayOrder;
+
+    public int getDisplayOrder() {
+        return displayOrder;
+    }
+
+    public void setDisplayOrder(int displayOrder) {
+        this.displayOrder = displayOrder;
+    }
 
     @Override
     public String toString() {

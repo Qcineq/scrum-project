@@ -3,10 +3,7 @@ package pl.coderslab.dao;
 import pl.coderslab.model.RecipePlan;
 import pl.coderslab.utils.DbUtil;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -25,6 +22,26 @@ public class RecipePlanDao {
             "JOIN day_name on day_name.id=day_name_id\n" +
             "JOIN recipe on recipe.id=recipe_id WHERE plan_id = ?\n" +
             "ORDER by day_name.display_order, recipe_plan.display_order;";
+
+    private static final String INSERT_RECIPE_INTO_PLAN = "INSERT INTO recipe_plan (recipe_id, meal_name, display_order, day_name_id, plan_id) values (?, ?, ?, ?, ?);";
+
+
+    public static void putRecipeIntoPlan(int recipe_id, String meal_name, int display_order, int day_name_id, int plan_id){
+        try(Connection connection = DbUtil.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(INSERT_RECIPE_INTO_PLAN, Statement.RETURN_GENERATED_KEYS);
+            statement.setInt(1, recipe_id);
+            statement.setString(2, meal_name);
+            statement.setInt(3, display_order);
+            statement.setInt(4, day_name_id);
+            statement.setInt(5, plan_id);
+            statement.executeUpdate();
+            ResultSet rs = statement.getGeneratedKeys();
+            RecipePlan recipePlan = new RecipePlan();
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
 
     public static Map<String, List<RecipePlan>> getLastPlanDetails(int admin_id){
         Map<String, List<RecipePlan>> recipePlanForEveryDay = new LinkedHashMap<>();
