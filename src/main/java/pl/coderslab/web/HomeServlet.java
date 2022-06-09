@@ -24,9 +24,6 @@ public class HomeServlet extends HttpServlet {
         List<Book> books = bookDao.findAll();
         System.out.println(books);
 
-        RecipePlanDao recipePlanDao = new RecipePlanDao();
-        recipePlanDao.getLastPlanDetails(1);
-
         getServletContext().getRequestDispatcher("/home.jsp").forward(request, response);
     }
 }
