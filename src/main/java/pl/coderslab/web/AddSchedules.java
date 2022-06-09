@@ -9,6 +9,8 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @WebServlet(name = "AddSchedules", value = "/app/plan/add")
 public class AddSchedules extends HttpServlet {
@@ -30,10 +32,12 @@ public class AddSchedules extends HttpServlet {
 
         String name= request.getParameter("name");
         String description = request.getParameter("description");
+        LocalDateTime localDateTime= LocalDateTime.now();
 
         Plan newPlan = new Plan();
         newPlan.setName(name);
         newPlan.setDescription(description);
+        newPlan.setCreated(String.valueOf(localDateTime));
 
         AdminDao adminDao =new AdminDao();
         String email=(String) session.getAttribute("email");
