@@ -15,7 +15,7 @@
                 <a class="nav-link" href="aboutApp.jsp">o aplikacji</a>
             </li>
             <li class="nav-item ml-4">
-                <a class="nav-link disabled" href="recipes.html">Przepisy</a>
+                <a class="nav-link disabled" href="recipes.jsp">Przepisy</a>
             </li>
             <li class="nav-item ml-4">
                 <a class="nav-link disabled" href="contact.jsp">Kontakt</a>
