@@ -60,7 +60,16 @@ public class AddRecipeToPlan extends HttpServlet {
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
-        RecipePlanDao.putRecipeIntoPlan(recipe_id, mealName, displayOrder, day_name_id, plan_id);
-        response.sendRedirect("/app/recipe/plan/add");
+        if(plan_id!=null && mealName!=null && !mealName.equals("") && displayOrder!=null && recipe_id !=null && day_name_id!=null){
+            RecipePlanDao.putRecipeIntoPlan(recipe_id, mealName, displayOrder, day_name_id, plan_id);
+            response.sendRedirect("/app/recipe/plan/add");
+        } else {
+            String wrongData = "Podano nieprawidłowe dane. Spróbuj ponownie";
+            response.setContentType("text/html");
+            response.setCharacterEncoding("utf8");
+            response.getWriter()
+                    .append(wrongData)
+                    .append("<a href='http://localhost:8080/app/recipe/plan/add'> wróć </a>");
+        }
     }
 }

@@ -15,6 +15,7 @@ import java.util.List;
 public class Plans extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("utf8");
         HttpSession session = request.getSession();
         AdminDao adminDao = new AdminDao();
         Admin loggedAdmin = adminDao.readAdminByEmail((String)session.getAttribute("email"));

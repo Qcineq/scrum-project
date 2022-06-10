@@ -19,32 +19,32 @@ public class AddSchedules extends HttpServlet {
         request.setCharacterEncoding("utf8");
         response.setCharacterEncoding("utf8");
         response.setContentType("text/html");
-        request.getServletContext().getRequestDispatcher("/app-add-schedules.jsp").forward(request,response);
+        request.getServletContext().getRequestDispatcher("/app-add-schedules.jsp").forward(request, response);
 
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        request.setCharacterEncoding("utf8");
         response.setContentType("text/html");
         response.setCharacterEncoding("utf8");
-        HttpSession session= request.getSession();
+        HttpSession session = request.getSession();
 
-        String name= request.getParameter("name");
+        String name = request.getParameter("name");
         String description = request.getParameter("description");
-        LocalDateTime localDateTime= LocalDateTime.now();
+        LocalDateTime localDateTime = LocalDateTime.now();
 
         Plan newPlan = new Plan();
         newPlan.setName(name);
         newPlan.setDescription(description);
         newPlan.setCreated(String.valueOf(localDateTime));
 
-        AdminDao adminDao =new AdminDao();
-        String email=(String) session.getAttribute("email");
-        Admin admin=adminDao.readAdminByEmail(email);
+        AdminDao adminDao = new AdminDao();
+        String email = (String) session.getAttribute("email");
+        Admin admin = adminDao.readAdminByEmail(email);
         newPlan.setAdmin_id(admin.getId());
-        PlanDao planDao=new PlanDao();
-        newPlan=planDao.create(newPlan);
+        PlanDao planDao = new PlanDao();
+        newPlan = planDao.create(newPlan);
         System.out.println(newPlan);
         response.sendRedirect("/app/plan/list");
 
