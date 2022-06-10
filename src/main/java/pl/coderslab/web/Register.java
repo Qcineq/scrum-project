@@ -17,7 +17,8 @@ public class Register extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+    response.setCharacterEncoding("utf8");
+    response.setContentType("text/html");
         String name = request.getParameter("name");
         String surname = request.getParameter("surname");
         String email = request.getParameter("email");
@@ -27,10 +28,21 @@ public class Register extends HttpServlet {
 
 
         if (name != "" && surname != "" && email != "" && password != "") {
-
-            AdminDao adminDao = new AdminDao();
-            response.sendRedirect("http://localhost:8080/login");
-
+            if (password.equals(repassword)) {
+                AdminDao adminDao = new AdminDao();
+                Admin newAdmin = new Admin();
+                newAdmin.setFirstName(name);
+                newAdmin.setLastName(surname);
+                newAdmin.setEmail(email);
+                newAdmin.setPassword(password);
+                newAdmin = adminDao.createAdmin(newAdmin);
+                response.sendRedirect("http://localhost:8080/login");
+            } else {
+                response.getWriter()
+                        .append("podane hasła nie pokrywają się. <br>")
+                        .append("<a href='http://localhost:8080/register'>wróć</a>");
+                return;
+            }
         } else {
             String wrongPassOrEmail = "Podano nieprawidłowe dane. Spróbuj ponownie";
             request.setAttribute("wrongpass", wrongPassOrEmail);
